@@ -2,17 +2,18 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pg2t60e6s2ko"
-path.s3tc="res://.godot/imported/roof.png-1e504ef93bd88363b8dd9c85f25c9628.s3tc.ctex"
+uid="uid://1d5seyxk8fd"
+path.s3tc="res://.godot/imported/pine_tree_bark.png-5bdaadd74df23356044cb907b63dd874.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={}
 
 [deps]
 
-source_file="res://textures/forest stuff/roof.png"
-dest_files=["res://.godot/imported/roof.png-1e504ef93bd88363b8dd9c85f25c9628.s3tc.ctex"]
+source_file="res://pine_tree_bark.png"
+dest_files=["res://.godot/imported/pine_tree_bark.png-5bdaadd74df23356044cb907b63dd874.s3tc.ctex"]
 
 [params]
 
