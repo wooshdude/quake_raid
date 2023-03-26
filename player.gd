@@ -1,21 +1,49 @@
 extends CharacterBody3D
 
+@onready var username_text = get_node("UsernameHover/SubViewport/Label")
+@onready var name_hover = $UsernameHover
+@onready var subviewport = $UsernameHover/SubViewport
 @onready var camera = $Camera3D
 @onready var ray = $Camera3D/RayCast3D
+@onready var weapon = $Camera3D/Eyasluna
+@onready var ammo_count = $HUD/CanvasLayer/AmmoCount
 
 @export var speed: float
 @export var jump: float
 @export var sensitivity: float
 
+var username: set = _set_username, get = _get_username
+
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * 2
+
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 
 
+func _set_username(name):
+	get_node("UsernameHover/SubViewport/Label").text = str(name)
+
+
+func _get_username():
+	return username
+
+
 func _ready():
 	if not is_multiplayer_authority(): return
+	
+	get_node("HUD/CanvasLayer/AmmoCount").visible = true
+	
+	#print($Sprite3D/SubViewport/Label2.text)
+	
+	#print(self)
+	#print(name_hover)
+	#print(subviewport)
+	#print(username_text)
+	
+	name_hover.texture = subviewport.get_texture()
 	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera.current = true
@@ -33,6 +61,9 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return
 	# Add the gravity.
+	
+	get_node("HUD/CanvasLayer/AmmoCount").text = str(weapon.ammo)
+	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
@@ -54,14 +85,18 @@ func _physics_process(delta):
 	move_and_slide()
 
 
-@rpc("any_peer")
+@rpc("call_local")
 func _on_eyasluna_shoot():
 	if not is_multiplayer_authority(): return
 	
 	if ray.is_colliding():
-		print(ray.get_collider())
-		var hit = ray.get_collision_point()
-		print(hit)
+		var hit_area = ray.get_collider()
+		print(hit_area)
+		var hit_obj = hit_area.get_parent()
+		#hit_obj.rpc_id(hit_area.get_multiplayer_authority(), "damage", 5)
+		hit_area.shot.emit(5, self)
+		var hit_point = ray.get_collision_point()
+		#print(hit_point)
 		
 	else:
 		pass

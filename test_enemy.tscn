@@ -1,0 +1,104 @@
+[gd_scene load_steps=14 format=3 uid="uid://d2dhh56s0520t"]
+
+[ext_resource type="ArrayMesh" uid="uid://m2ce8r0qwrdl" path="res://guardian_base.obj" id="1_gifd2"]
+[ext_resource type="Script" path="res://test_enemy.gd" id="1_vkhyl"]
+[ext_resource type="Script" path="res://Body_Hitbox.gd" id="3_hhxru"]
+[ext_resource type="Script" path="res://Critical_Hitbox.gd" id="3_vba6l"]
+[ext_resource type="PackedScene" uid="uid://dxbu2pms1n5w7" path="res://entity_name_hover.tscn" id="5_fqfbo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3rwnr"]
+albedo_color = Color(0.458824, 0.439216, 0.623529, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q5c1q"]
+size = Vector3(0.601096, 1.18855, 0.274172)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xh57n"]
+radius = 0.182064
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bju3g"]
+radius = 0.240504
+height = 1.56059
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4em3u"]
+viewport_path = NodePath("HUD/Sprite3D/SubViewportContainer/SubViewport")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kf3ah"]
+height = 7.32905
+radius = 3.59233
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jv2m4"]
+height = 12.383
+radius = 8.51759
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_d5s67"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:health")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/sync = true
+properties/3/path = NodePath("HUD/Sprite3D:texture")
+properties/3/spawn = true
+properties/3/sync = true
+
+[node name="test_enemy" type="CharacterBody3D" groups=["enemies"]]
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+floor_stop_on_slope = false
+script = ExtResource("1_vkhyl")
+view_distance = 20
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_gifd2")
+surface_material_override/0 = SubResource("StandardMaterial3D_3rwnr")
+
+[node name="Body_Hitbox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("3_hhxru")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body_Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0189568, 0.624453, -0.00920701)
+shape = SubResource("BoxShape3D_q5c1q")
+
+[node name="Critical_Hitbox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("3_vba6l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Critical_Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42476, 0)
+shape = SubResource("SphereShape3D_xh57n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.775312, 0)
+shape = SubResource("CapsuleShape3D_bju3g")
+
+[node name="HUD" parent="." instance=ExtResource("5_fqfbo")]
+
+[node name="Sprite3D" parent="HUD" index="0"]
+texture = SubResource("ViewportTexture_4em3u")
+
+[node name="Sight" type="Area3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sight"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.37295, 3.96396)
+shape = SubResource("CylinderShape3D_kf3ah")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Sight"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.02524, 13.6662)
+shape = SubResource("CylinderShape3D_jv2m4")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_d5s67")
+
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+
+[editable path="HUD"]

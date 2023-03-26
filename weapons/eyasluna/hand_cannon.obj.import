@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cba37hq2g7ed6"
+path="res://.godot/imported/hand_cannon.obj-61e83f6937bf75ef613fb542456ab5a4.mesh"
+
+[deps]
+
+files=["res://.godot/imported/hand_cannon.obj-61e83f6937bf75ef613fb542456ab5a4.mesh"]
+
+source_file="res://weapons/eyasluna/hand_cannon.obj"
+dest_files=["res://.godot/imported/hand_cannon.obj-61e83f6937bf75ef613fb542456ab5a4.mesh", "res://.godot/imported/hand_cannon.obj-61e83f6937bf75ef613fb542456ab5a4.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

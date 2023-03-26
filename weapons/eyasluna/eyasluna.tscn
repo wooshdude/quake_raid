@@ -1,0 +1,154 @@
+[gd_scene load_steps=10 format=3 uid="uid://bpbnay1hyg24o"]
+
+[ext_resource type="Script" path="res://weapons/hand_cannon.gd" id="1_2c3ls"]
+[ext_resource type="ArrayMesh" uid="uid://cba37hq2g7ed6" path="res://weapons/eyasluna/hand_cannon.obj" id="2_urbl2"]
+[ext_resource type="Texture2D" uid="uid://pdyngf85yq41" path="res://flash.png" id="3_m3klv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5qt8w"]
+transparency = 1
+albedo_texture = ExtResource("3_m3klv")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="Animation" id="Animation_s3ong"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("Sprite3D:material_override:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_n5d6h"]
+resource_name = "reload"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.7, 1.2, 1.7, 2.2, 2.6, 2.8, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.00457854, -0.0229234, 0.00105183), Vector3(0.632688, -0.0284265, -0.0156551), Vector3(0.501403, 0.0871452, 0.734001), Vector3(1.04495, 0.14511, 0.161562), Vector3(-0.75267, 0.0996107, -0.0323775), Vector3(0.172521, 0.0737429, 0.048517), Vector3(0.0605159, 0.177549, 0.887832), Vector3(0.183016, -0.040881, -0.578955), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_3pbk1"]
+resource_name = "shoot"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0303587, 0.0521216, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.538609, 0, 0), Vector3(0.648909, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("Sprite3D:material_override:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qo7bw"]
+_data = {
+"RESET": SubResource("Animation_s3ong"),
+"reload": SubResource("Animation_n5d6h"),
+"shoot": SubResource("Animation_3pbk1")
+}
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wrri5"]
+properties/0/path = NodePath("AnimationPlayer:current_animation")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath("Sprite3D:material_override")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath("Model:rotation")
+properties/2/spawn = true
+properties/2/sync = true
+properties/3/path = NodePath("Sprite3D:visible")
+properties/3/spawn = true
+properties/3/sync = true
+
+[node name="Eyasluna" type="Node3D"]
+script = ExtResource("1_2c3ls")
+damage = 5.0
+
+[node name="Model" type="Node3D" parent="."]
+transform = Transform3D(1.87768, 0, 0, 0, 1.83705, 0, 0, 0, 1.93687, 0, 0, 0)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 2.79397e-08, -5.7742e-08, -5.02914e-08, 0.999996, 0, -1.49012e-07, -2.98023e-08, 0.999993, 8.5594e-09, -0.131948, -0.21208)
+mesh = ExtResource("2_urbl2")
+skeleton = NodePath("../..")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.375537, 0, 0, 0, 0.36741, 0, 0, 0, 0.387374, 0.0547805, 0.141007, -0.85808)
+visible = false
+material_override = SubResource("StandardMaterial3D_5qt8w")
+texture = ExtResource("3_m3klv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qo7bw")
+}
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_wrri5")
