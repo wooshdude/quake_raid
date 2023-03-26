@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://dda262arloh"
+path="res://.godot/imported/church.map-e20b858ebfebf8212f6a1d2096dda028.tres"
+
+[deps]
+
+source_file="res://Trenchbroom/church.map"
+dest_files=["res://.godot/imported/church.map-e20b858ebfebf8212f6a1d2096dda028.tres"]
+
+[params]
+

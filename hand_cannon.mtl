@@ -1,0 +1,6 @@
+# Made in Blockbench 4.6.5
+newmtl m_c49c63e6-012d-a0e1-562b-c2d11c0a95c3
+map_Kd gray_concrete.png 
+newmtl m_acdb5afc-5466-1527-8503-d78f46fb3fa9
+map_Kd red_concrete.png 
+newmtl none

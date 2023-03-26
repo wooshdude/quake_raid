@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quake_raid", "quake_raid.csproj", "{B481BFBE-3DF0-4E44-86F5-C9774A50AF8E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B481BFBE-3DF0-4E44-86F5-C9774A50AF8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B481BFBE-3DF0-4E44-86F5-C9774A50AF8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B481BFBE-3DF0-4E44-86F5-C9774A50AF8E}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{B481BFBE-3DF0-4E44-86F5-C9774A50AF8E}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{B481BFBE-3DF0-4E44-86F5-C9774A50AF8E}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{B481BFBE-3DF0-4E44-86F5-C9774A50AF8E}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal
