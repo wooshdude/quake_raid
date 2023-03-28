@@ -1,6 +1,6 @@
 extends RigidBody3D
 
-var speed = 20
+var speed = 50
 var damage
 
 # Called when the node enters the scene tree for the first time.

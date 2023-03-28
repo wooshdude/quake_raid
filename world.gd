@@ -83,7 +83,7 @@ func get_random_position_around_object(object_pos: Vector3, radius: float) -> Ve
 
 func _on_timer_timeout():
 	print("spawned new enemy")
-	var enemy = test_enemy.instantiate(PackedScene.GEN_EDIT_STATE_MAIN)
+	var enemy = test_enemy.instantiate()
 	#enemy.name = str(multiplayer.get_unique_id())
 	$Spawner.add_child(enemy)
 	enemy.global_position = get_random_position_around_object($Spawner.global_position, 4)

@@ -1,10 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://d2dhh56s0520t"]
+[gd_scene load_steps=16 format=3 uid="uid://d2dhh56s0520t"]
 
 [ext_resource type="ArrayMesh" uid="uid://m2ce8r0qwrdl" path="res://guardian_base.obj" id="1_gifd2"]
 [ext_resource type="Script" path="res://test_enemy.gd" id="1_vkhyl"]
 [ext_resource type="Script" path="res://Body_Hitbox.gd" id="3_hhxru"]
 [ext_resource type="Script" path="res://Critical_Hitbox.gd" id="3_vba6l"]
-[ext_resource type="PackedScene" uid="uid://dxbu2pms1n5w7" path="res://entity_name_hover.tscn" id="5_fqfbo"]
+[ext_resource type="FontFile" uid="uid://dfr414ntewvp8" path="res://Retro Gaming.ttf" id="5_csh5g"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3rwnr"]
 albedo_color = Color(0.458824, 0.439216, 0.623529, 1)
@@ -18,9 +18,6 @@ size = Vector3(0.601096, 1.18855, 0.274172)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bju3g"]
 radius = 0.240504
 height = 1.56059
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_4em3u"]
-viewport_path = NodePath("HUD/Sprite3D/SubViewportContainer/SubViewport")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_kf3ah"]
 height = 7.32905
@@ -43,6 +40,15 @@ properties/2/sync = true
 properties/3/path = NodePath("HUD/Sprite3D:texture")
 properties/3/spawn = false
 properties/3/sync = false
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_t5q4f"]
+viewport_path = NodePath("HUD/Sprite3D/SubViewportContainer/SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6vu3y"]
+bg_color = Color(0.0823529, 0.0823529, 0.0823529, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c7mwc"]
+bg_color = Color(0.921569, 0.282353, 0.227451, 1)
 
 [node name="test_enemy" type="CharacterBody3D" groups=["enemies"]]
 axis_lock_angular_x = true
@@ -77,15 +83,6 @@ shape = SubResource("BoxShape3D_q5c1q")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.775312, 0)
 shape = SubResource("CapsuleShape3D_bju3g")
 
-[node name="HUD" parent="." instance=ExtResource("5_fqfbo")]
-
-[node name="Sprite3D" parent="HUD" index="0"]
-texture = SubResource("ViewportTexture_4em3u")
-
-[node name="SubViewport" parent="HUD/Sprite3D" index="0"]
-own_world_3d = false
-size_2d_override_stretch = true
-
 [node name="Sight" type="Area3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 collision_layer = 0
@@ -103,6 +100,45 @@ shape = SubResource("CylinderShape3D_jv2m4")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_d5s67")
 
-[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+[node name="HUD" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75361, 0)
 
-[editable path="HUD"]
+[node name="Sprite3D" type="Sprite3D" parent="HUD"]
+transform = Transform3D(0.605068, 0, 0, 0, 0.605068, 0, 0, 0, 0.605068, 0.0110996, 0.00556338, 0)
+billboard = 1
+texture_filter = 2
+texture = SubResource("ViewportTexture_t5q4f")
+
+[node name="SubViewport" type="SubViewport" parent="HUD/Sprite3D"]
+disable_3d = true
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(224, 38)
+render_target_clear_mode = 2
+render_target_update_mode = 4
+
+[node name="Label" type="Label" parent="HUD/Sprite3D/SubViewport"]
+texture_filter = 1
+offset_left = -2.0
+offset_top = -6.0
+offset_right = 151.0
+offset_bottom = 25.0
+theme_override_fonts/font = ExtResource("5_csh5g")
+theme_override_font_sizes/font_size = 22
+text = "test enemy
+"
+
+[node name="ProgressBar" type="ProgressBar" parent="HUD/Sprite3D/SubViewport"]
+offset_top = 26.0
+offset_right = 224.0
+offset_bottom = 38.0
+theme_override_styles/background = SubResource("StyleBoxFlat_6vu3y")
+theme_override_styles/fill = SubResource("StyleBoxFlat_c7mwc")
+value = 100.0
+show_percentage = false
+
+[node name="Node2D" type="Node2D" parent="HUD/Sprite3D/SubViewport"]
+
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]

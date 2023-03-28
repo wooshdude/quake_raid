@@ -19,6 +19,12 @@ var currently_equiped = 0
 var aim_sens = sensitivity * 0.2
 var username: set = _set_username, get = _get_username
 
+enum {
+	WALK,
+	CROUCH,
+	SPRINT
+}
+var STATE = WALK
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * 2
@@ -65,6 +71,7 @@ func _unhandled_input(event):
 			currently_equiped -= 1
 		else:
 			currently_equiped = len(inventory.equipable)-1
+		weapon.sound.stream = weapon.resource.sound
 			
 		weapon.animator.stop()
 			
@@ -73,8 +80,19 @@ func _unhandled_input(event):
 			currently_equiped += 1
 		else:
 			currently_equiped = 0
+			
+		weapon.sound.stream = weapon.resource.sound
 
 		weapon.animator.stop()
+		
+	if Input.is_action_just_pressed("shift") and Input.is_action_pressed("up"):
+		if STATE != SPRINT:
+			STATE = SPRINT
+		else:
+			STATE = WALK
+	
+	if not Input.is_action_pressed("up"):
+		STATE = WALK
 
 
 func _physics_process(delta):
@@ -100,18 +118,45 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = jump
 
+	match STATE:
+		WALK:
+			walk(delta)
+		CROUCH:
+			pass
+		SPRINT:
+			sprint(delta)
+	
+
+	move_and_slide()
+
+func walk(delta):
+	movement(delta, speed)
+
+
+func sprint(delta):
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var input_dir = Input.get_vector("left", "right", "up", "down")
+	var direction = (transform.basis * Vector3(input_dir.x/2, 0, input_dir.y)).normalized()
+	if direction:
+		velocity.x = move_toward(velocity.x, direction.x * (speed + (speed/2)), speed/2)
+		velocity.z = move_toward(velocity.z, direction.z * (speed + (speed/2)), speed/2)
+	else:
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.z = move_toward(velocity.z, 0, speed)
+
+
+func movement(delta, new_speed):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("left", "right", "up", "down")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
-		velocity.x = direction.x * speed
-		velocity.z = direction.z * speed
+		velocity.x = move_toward(velocity.x, direction.x * new_speed, speed/2)
+		velocity.z = move_toward(velocity.z, direction.z * new_speed, speed/2)
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
-
-	move_and_slide()
 
 
 @rpc("call_local")

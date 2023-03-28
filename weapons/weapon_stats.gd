@@ -10,6 +10,7 @@ class_name WeaponStats
 @export var model: Mesh
 @export var muzzle_pos: Vector3
 @export var icon: Texture
+@export var sound: AudioStream
 
 @export var custom_trait: Script
 

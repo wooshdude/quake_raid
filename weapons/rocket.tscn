@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cn1qpeoijygo1"]
+[gd_scene load_steps=13 format=3 uid="uid://b7ojrry5x6m2v"]
 
 [ext_resource type="Script" path="res://Rocket.gd" id="1_uc0kv"]
 [ext_resource type="Texture2D" uid="uid://biak717sftrk1" path="res://textures/explosion.png" id="2_v2w3p"]

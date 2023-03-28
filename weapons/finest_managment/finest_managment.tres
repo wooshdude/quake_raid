@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="WeaponStats" load_steps=5 format=3 uid="uid://d080248135rkx"]
+
+[ext_resource type="Script" path="res://weapons/weapon_stats.gd" id="1_6sdox"]
+[ext_resource type="ArrayMesh" uid="uid://ce0xca5tq3ylu" path="res://weapons/finest_managment/finest_managment.obj" id="1_gnlt6"]
+[ext_resource type="Script" path="res://weapons/hit_scan.gd" id="1_iyr2g"]
+[ext_resource type="AudioStream" uid="uid://30doycfpntc2" path="res://weapons/Shot1Energy2.0.wav" id="3_bjhbv"]
+
+[resource]
+script = ExtResource("1_6sdox")
+damage = 2
+mag_size = 30
+rpm = 750.0
+full_auto = true
+recoil = 5
+reload = 1.5
+model = ExtResource("1_gnlt6")
+muzzle_pos = Vector3(0, 0.117889, -0.505426)
+sound = ExtResource("3_bjhbv")
+custom_trait = ExtResource("1_iyr2g")

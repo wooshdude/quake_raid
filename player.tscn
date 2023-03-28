@@ -69,12 +69,15 @@ properties/1/sync = true
 properties/2/path = NodePath("Head:rotation")
 properties/2/spawn = true
 properties/2/sync = true
+properties/3/path = NodePath("Head/Camera3D/Weapon/Model/MeshInstance3D:mesh")
+properties/3/spawn = true
+properties/3/sync = true
 
 [node name="player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01727, 0)
 collision_layer = 0
 script = ExtResource("1_uxq1m")
-speed = 10.0
+speed = 8.0
 jump = 10.0
 sensitivity = 2.0
 inventory = ExtResource("2_hyhxc")
@@ -104,7 +107,7 @@ texture_albedo = ExtResource("3_26x8t")
 texture_normal = ExtResource("3_26x8t")
 
 [node name="Weapon" parent="Head/Camera3D" instance=ExtResource("2_pt21w")]
-transform = Transform3D(1.278, 0, 0, 0, 1.278, 0, 0, 0, 1.278, 0.351405, -0.194719, -0.371065)
+transform = Transform3D(1.278, 0, 0, 0, 1.278, 0, 0, 0, 1.278, 0.351405, -0.226421, -0.359447)
 
 [node name="HUD" type="Node" parent="."]
 

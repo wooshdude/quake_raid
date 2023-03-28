@@ -1,0 +1,85 @@
+[gd_scene load_steps=14 format=3 uid="uid://cg86glkjaorry"]
+
+[ext_resource type="Script" path="res://Target.gd" id="1_j8imx"]
+[ext_resource type="Script" path="res://weapons/finest_managment/Area3D.gd" id="2_jtqmj"]
+[ext_resource type="ArrayMesh" uid="uid://cfjn7v5cr78jo" path="res://target.obj" id="2_sf6vc"]
+[ext_resource type="FontFile" uid="uid://dfr414ntewvp8" path="res://Retro Gaming.ttf" id="3_oajx3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmj12"]
+albedo_color = Color(0, 0.0117647, 0.054902, 1)
+metallic_specular = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l2so2"]
+albedo_color = Color(0.835294, 0.835294, 0.835294, 1)
+metallic_specular = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wg3ug"]
+albedo_color = Color(0.933333, 0.309804, 0.360784, 1)
+metallic_specular = 0.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rg3dy"]
+
+[sub_resource type="Curve" id="Curve_2j5q1"]
+min_value = 1.0
+max_value = 100.0
+_data = [Vector2(0, 0.0090909), 0.0, 0.0, 0, 0, Vector2(1, 14.5), 5.85714, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_r2nxj"]
+curve = SubResource("Curve_2j5q1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1shmg"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(0, 1, 0)
+spread = 7.89
+initial_velocity_min = 1.64
+initial_velocity_max = 5.22
+damping_min = 1.0
+damping_max = 1.0
+damping_curve = SubResource("CurveTexture_r2nxj")
+color = Color(0.796078, 0.690196, 0.266667, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dgshn"]
+shading_mode = 0
+disable_ambient_light = true
+albedo_color = Color(0.831373, 0.752941, 0.211765, 1)
+texture_filter = 2
+disable_receive_shadows = true
+billboard_mode = 1
+
+[sub_resource type="TextMesh" id="TextMesh_t84nr"]
+material = SubResource("StandardMaterial3D_dgshn")
+text = "9999"
+font = ExtResource("3_oajx3")
+uppercase = true
+depth = 0.0
+
+[node name="Target" type="Node3D"]
+script = ExtResource("1_j8imx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.000209494, -1, 0, 1, -0.000209494, 0, 0, 0)
+mesh = ExtResource("2_sf6vc")
+surface_material_override/0 = SubResource("StandardMaterial3D_fmj12")
+surface_material_override/1 = SubResource("StandardMaterial3D_l2so2")
+surface_material_override/2 = SubResource("StandardMaterial3D_wg3ug")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("2_jtqmj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_rg3dy")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0034368, 0.195738)
+sorting_offset = 100.0
+emitting = false
+visibility_aabb = AABB(-0.526647, -0.531781, -0.179817, 1.05329, 1.06356, 0.359635)
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_1shmg")
+draw_pass_1 = SubResource("TextMesh_t84nr")
+
+[connection signal="shot" from="Area3D" to="." method="_on_area_3d_shot"]

@@ -79,7 +79,8 @@ func _on_critical_hitbox_shot(value, object):
 	damage.rpc(value * 2)
 	
 	#print(object._get_username())
-	look_at(object.get_parent().global_position)
+	if object.get_parent() not in looking_at:
+		looking_at.append(object.get_parent())
 
 
 @rpc("any_peer", "call_remote")
@@ -90,15 +91,16 @@ func _on_body_hitbox_shot(value, object):
 	damage(value)
 	damage.rpc(value)
 
-	look_at(object.get_parent().global_position)
+	if object.get_parent() not in looking_at:
+		looking_at.append(object.get_parent())
 
 
 func _on_sight_area_entered(area):
 	#if not is_multiplayer_authority(): return
 	
 	#print(area)
-	if area not in looking_at:
-		looking_at.append(area)
+	if area.get_parent() not in looking_at:
+		looking_at.append(area.get_parent())
 
 
 func _on_navigation_agent_3d_target_reached():

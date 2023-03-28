@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://pnfvpkh67iys"]
+[gd_scene load_steps=42 format=3 uid="uid://pnfvpkh67iys"]
 
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_3oqwm"]
 [ext_resource type="Script" path="res://world.gd" id="1_0111f"]
@@ -8,10 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://b27tyr4udvg28" path="res://textures/forest stuff/bark_n.jpg" id="5_tid4v"]
 [ext_resource type="Texture2D" uid="uid://pg2t60e6s2ko" path="res://textures/forest stuff/roof.png" id="6_y1fv5"]
 [ext_resource type="Texture2D" uid="uid://biv107vfbpeui" path="res://textures/forest stuff/brick.png" id="7_hpd2d"]
-[ext_resource type="MeshLibrary" uid="uid://bt2o6lvkcp1o5" path="res://foliage/tree/pine_tree.tres" id="8_eptmy"]
 [ext_resource type="PackedScene" uid="uid://d2dhh56s0520t" path="res://test_enemy.tscn" id="10_p6kvj"]
+[ext_resource type="MeshLibrary" uid="uid://dnnrh72rdhx4e" path="res://pine_tree_collision.tres" id="11_2ew12"]
 [ext_resource type="Script" path="res://Node3D2.gd" id="11_3hlby"]
-[ext_resource type="PackedScene" uid="uid://cn1qpeoijygo1" path="res://weapons/rocket.tscn" id="12_f64mq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_aofgr"]
 sky_top_color = Color(0.384314, 0.454902, 0.54902, 1)
@@ -287,10 +286,6 @@ layout_mode = 2
 text = "Join
 "
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://player.tscn", "res://test_enemy.tscn")
-spawn_path = NodePath("..")
-
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(-0.929113, 0, 0.369795, 0.0563694, 0.988314, 0.141628, -0.365474, 0.152434, -0.918255, -6.1711, 5.04264, -9.99815)
 shadow_enabled = true
@@ -318,13 +313,6 @@ transform = Transform3D(0.99075, -0.135698, 0, 0.135698, 0.99075, 0, 0, 0, 1, 0,
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D"]
 shape = SubResource("SphereShape3D_6w24u")
-
-[node name="GridMap" type="GridMap" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.251266, 0)
-mesh_library = ExtResource("8_eptmy")
-data = {
-"cells": PackedInt32Array(65535, 15, 0, 4, 16, 0, 4, 12, 0, 8, 16, 0, 7, 13, 0, 65527, 65514, 0, 1, 65514, 0, 65530, 65520, 0, 65526, 65519, 0, 65521, 65511, 0, 65515, 65511, 0, 65509, 65513, 0, 65504, 65510, 0, 65504, 65511, 0, 65500, 65513, 0, 65496, 65514, 0, 65490, 65513, 0, 65490, 65511, 0, 65483, 65512, 0, 65481, 65513, 0, 65475, 65511, 0, 65474, 65513, 0, 65471, 65518, 0, 65468, 65514, 0, 65477, 65520, 0, 65469, 65525, 0, 65475, 65528, 0, 65471, 65533, 0, 65474, 0, 0, 65468, 6, 0, 65477, 65532, 0, 65476, 8, 0, 65479, 0, 0, 65470, 8, 0, 65472, 17, 0, 65474, 12, 0, 65468, 13, 0, 65477, 16, 0, 65474, 20, 0, 65483, 17, 0, 65489, 15, 0, 65492, 19, 0, 65497, 17, 0, 65506, 19, 0, 65507, 15, 0, 65514, 16, 0, 65514, 20, 0, 65521, 18, 0, 65526, 15, 0, 65529, 19, 0, 65531, 13, 0, 3, 8, 0, 6, 4, 0, 65530, 10, 0, 8, 9, 0, 65527, 9, 0, 65526, 5, 0, 65534, 9, 0, 65531, 4, 0, 65531, 65514, 0, 2, 65511, 0, 65530, 65510, 0, 5, 65519, 0, 65535, 65520, 0, 9, 65514, 0, 5, 65523, 0, 65527, 65524, 0, 65526, 65528, 0, 65532, 65526, 0, 6, 65529, 0, 10, 65533, 0, 2, 65527, 0, 10, 65526, 0, 10, 65520, 0, 5, 65514, 0, 11, 65511, 0, 11, 2, 0, 12, 17, 0, 2, 19, 0, 7, 21, 0, 65534, 19, 0, 3, 5, 0, 10, 6, 0, 65519, 12, 0, 65521, 7, 0, 65519, 65520, 0, 65513, 65518, 0, 65505, 65520, 0, 65500, 65518, 0, 65517, 65525, 0, 65515, 5, 0, 65509, 12, 0, 65499, 12, 0, 65483, 8, 0, 65485, 65535, 0, 65483, 65526, 0, 65486, 65518, 0, 65489, 65522, 0, 65497, 65523, 0, 65511, 65523, 0, 65502, 6, 0)
-}
 
 [node name="test_enemy" parent="." instance=ExtResource("10_p6kvj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3589, 0, 0)
@@ -356,8 +344,21 @@ collision_layer = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D2/Area3D"]
 shape = SubResource("BoxShape3D_00y6o")
 
-[node name="Rocket" parent="." instance=ExtResource("12_f64mq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.2027, 7.83661, 0)
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="GridMap" type="GridMap" parent="StaticBody3D"]
+mesh_library = ExtResource("11_2ew12")
+collision_layer = 3
+collision_mask = 3
+bake_navigation = true
+data = {
+"cells": PackedInt32Array(65531, 13, 0, 4, 14, 0, 0, 9, 0, 65533, 16, 0, 65528, 7, 0, 65527, 10, 0, 65531, 11, 0, 5, 10, 0, 4, 6, 0, 65530, 4, 0, 8, 3, 0, 10, 9, 0, 65523, 17, 0, 65526, 15, 0, 65529, 19, 0, 65516, 17, 0, 65520, 17, 0, 2, 19, 0, 0, 14, 0, 8, 20, 0, 9, 15, 0, 65526, 3, 0, 65534, 4, 0, 11, 65529, 0, 11, 0, 0, 6, 65529, 0, 65525, 65511, 0, 65533, 65511, 0, 65529, 65517, 0, 65529, 65512, 0, 4, 65514, 0, 65535, 65518, 0, 65535, 65514, 0, 6, 65510, 0, 11, 65515, 0, 7, 65521, 0, 65530, 65523, 0, 65525, 65517, 0, 65519, 65514, 0, 65513, 65510, 0, 65510, 65513, 0, 65515, 65514, 0, 65512, 65519, 0, 65518, 65519, 0, 65516, 65523, 0, 65521, 65525, 0, 65525, 65522, 0, 1, 65524, 0, 4, 65518, 0, 1, 65512, 0, 0, 65510, 0, 65529, 65510, 0, 65522, 65509, 0, 65519, 65511, 0, 65522, 65513, 0, 65515, 65511, 0, 3, 65510, 0, 5, 65511, 0, 9, 65510, 0, 8, 65513, 0, 11, 65512, 0, 9, 65517, 0, 11, 65519, 0, 11, 65521, 0, 10, 65523, 0, 13, 65525, 0, 11, 65526, 0, 10, 65533, 0, 12, 65532, 0, 12, 3, 0, 10, 3, 0, 8, 6, 0, 12, 7, 0, 12, 12, 0, 10, 12, 0, 13, 17, 0, 11, 17, 0, 9, 17, 0, 6, 18, 0, 5, 20, 0, 3, 17, 0, 65535, 18, 0, 65535, 20, 0, 65532, 19, 0, 65531, 18, 0, 65528, 18, 0, 65525, 20, 0, 65523, 18, 0, 65523, 14, 0, 65521, 15, 0, 65518, 12, 0, 65517, 12, 0, 65514, 10, 0, 65516, 13, 0, 65516, 9, 0, 196583, 65523, 0, 196585, 65526, 0, 196589, 65527, 0, 196584, 6, 0, 196586, 3, 0, 196574, 65524, 0, 196562, 65523, 0, 131038, 65521, 0, 131039, 65521, 0, 131043, 65520, 0, 131032, 65521, 0, 65496, 65517, 0, 65503, 65517, 0, 65490, 65517, 0, 65495, 65512, 0, 65501, 65513, 0, 65505, 65511, 0, 65500, 65510, 0, 131056, 5, 0, 131057, 0, 0, 131058, 7, 0)
+}
+metadata/_editor_floor_ = Vector3(0, 1, 0)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player.tscn", "res://test_enemy.tscn")
+spawn_path = NodePath("..")
 
 [connection signal="text_changed" from="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/UsernameEntry" to="." method="_on_username_entry_text_changed"]
 [connection signal="text_changed" from="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/AddressEntry" to="." method="_on_address_entry_text_changed"]

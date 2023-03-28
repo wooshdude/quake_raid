@@ -1,0 +1,20 @@
+[gd_resource type="TextMesh" load_steps=3 format=3 uid="uid://xb3yr7nr0xr5"]
+
+[ext_resource type="FontFile" uid="uid://dfr414ntewvp8" path="res://Retro Gaming.ttf" id="1_8k01x"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ru8p"]
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(1, 0.831373, 0.27451, 1)
+billboard_mode = 1
+grow_amount = -5.58
+fixed_size = true
+
+[resource]
+material = SubResource("StandardMaterial3D_8ru8p")
+text = "9999"
+font = ExtResource("1_8k01x")
+font_size = 11
+uppercase = true
+pixel_size = 0.0038
+depth = 0.0

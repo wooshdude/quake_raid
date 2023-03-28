@@ -1,0 +1,20 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://bn6o4t7ndcabc"]
+
+[sub_resource type="Curve" id="Curve_jwnui"]
+max_value = 100.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 85.4545), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_dn8y1"]
+curve = SubResource("Curve_jwnui")
+
+[resource]
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, 1, 0)
+spread = 10.26
+initial_velocity_min = 2.56
+initial_velocity_max = 2.56
+damping_min = 0.22
+damping_max = 0.22
+damping_curve = SubResource("CurveTexture_dn8y1")

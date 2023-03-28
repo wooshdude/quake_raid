@@ -6,11 +6,13 @@ extends Node3D
 @onready var muzzle = $Model/Muzzle
 @onready var flash = $Model/Muzzle/Sprite3D
 @onready var ray = $Model/Muzzle/RayCast3D
+@onready var sound = $Model/Muzzle/AudioStreamPlayer3D
 
 @export var resource: Resource
 var custom_trait
 
 var can_shoot = true
+var sounds = []
 
 signal shoot
 signal aiming(value)
@@ -28,12 +30,8 @@ func _ready():
 	model.show()
 	meshinstance.show()
 	
-	meshinstance.mesh = resource.model
-	muzzle.position = resource.muzzle_pos
-	#custom_trait = resource.get(resource.custom_trait)
-	
-	var custom_script = resource.custom_trait
-	custom_trait = custom_script.new()
+	update()
+	sound.stream = resource.sound
 	
 	flash.hide()
 
@@ -73,6 +71,7 @@ func update():
 	
 	meshinstance.mesh = resource.model
 	muzzle.position = resource.muzzle_pos
+	#sound.stream = resource.sound
 
 	var custom_script = resource.custom_trait
 	custom_trait = custom_script.new()
@@ -85,6 +84,13 @@ func shoot_anim():
 	#animator.play('shoot')
 	print(custom_trait)
 	custom_trait.shoot(self)
+	var new_sound = AudioStreamPlayer3D.new()
+	new_sound.max_distance = 10
+	new_sound.stream = resource.sound
+	add_child(new_sound)
+	sounds.append(new_sound)
+	new_sound.connect("finished", delete_sound)
+	new_sound.play()
 	
 	print(resource.damage)
 	flash.show()
@@ -98,6 +104,11 @@ func shoot_anim():
 	model.rotation.y = lerp_angle(model.rotation.y, deg_to_rad(randf_range(-0.3, 0.3)), 1)
 	
 	$SPR.start(float(1/(resource.rpm/60)))
+
+
+func delete_sound():
+	sounds[0].queue_free()
+	sounds.remove_at(0)
 
 
 func reload():
