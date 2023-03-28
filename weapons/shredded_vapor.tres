@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="WeaponStats" load_steps=4 format=3 uid="uid://c5nir82omu4s7"]
+
+[ext_resource type="Script" path="res://weapons/projectile.gd" id="1_ftlia"]
+[ext_resource type="ArrayMesh" uid="uid://bjwuk38fyycnl" path="res://weapons/shredded_vapor/Shredded_Vapor.obj" id="1_oqxpd"]
+[ext_resource type="Script" path="res://weapons/weapon_stats.gd" id="2_ynfss"]
+
+[resource]
+script = ExtResource("2_ynfss")
+damage = 20
+mag_size = 1
+rpm = 75.0
+full_auto = false
+recoil = 50
+reload = 0.5
+model = ExtResource("1_oqxpd")
+muzzle_pos = Vector3(0, 0, 0)
+custom_trait = ExtResource("1_ftlia")

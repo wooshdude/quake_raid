@@ -1,15 +1,15 @@
 [gd_resource type="Resource" script_class="TrenchBroomGameConfigFolder" load_steps=5 format=3 uid="uid://bghak6rw0v1jt"]
 
 [ext_resource type="Resource" uid="uid://7h57nuq1xmoi" path="res://addons/qodot/game_definitions/fgd/qodot_fgd.tres" id="1"]
-[ext_resource type="Texture2D" uid="uid://d1jo27rtsprsx" path="res://icon.svg" id="2"]
 [ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/trenchbroom/trenchbroom_game_config_folder.gd" id="3"]
+[ext_resource type="Texture2D" uid="uid://cuf5w88u5l8d3" path="res://bullet_hole.png" id="3_2qt76"]
 [ext_resource type="Resource" uid="uid://bfccniysop476" path="res://addons/qodot/game_definitions/trenchbroom/qodot_trenchbroom_config_file.tres" id="4"]
 
 [resource]
 script = ExtResource("3")
 export_file = false
 trenchbroom_games_folder = "C:\\Users\\pjark\\Downloads\\TrenchBroom-Win32-v2023.1-Release\\games"
-game_name = "Raid Test"
-icon = ExtResource("2")
+game_name = "quake raid"
+icon = ExtResource("3_2qt76")
 game_config_file = ExtResource("4")
 fgd_files = Array[Resource]([ExtResource("1")])

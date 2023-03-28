@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://cexg3vn5meeys"]
+[gd_scene load_steps=23 format=3 uid="uid://cdifpvd2rt0fg"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_uxq1m"]
+[ext_resource type="Resource" uid="uid://doc5edwb7g1q0" path="res://weapons/player_inventory.tres" id="2_hyhxc"]
 [ext_resource type="ArrayMesh" uid="uid://m2ce8r0qwrdl" path="res://guardian_base.obj" id="2_ic66e"]
-[ext_resource type="PackedScene" uid="uid://bpbnay1hyg24o" path="res://weapons/eyasluna/eyasluna.tscn" id="2_pt21w"]
+[ext_resource type="PackedScene" uid="uid://di3fv8g2jjenb" path="res://weapons/eyasluna/weapon.tscn" id="2_pt21w"]
 [ext_resource type="Texture2D" uid="uid://cuf5w88u5l8d3" path="res://bullet_hole.png" id="3_26x8t"]
-[ext_resource type="Texture2D" uid="uid://b3326832euglx" path="res://HUD/KovaaK-Crosshair(1).png" id="5_8gn4m"]
+[ext_resource type="Texture2D" uid="uid://cve0nf46jywy5" path="res://weapons/KovaaK-Crosshair(2).png" id="5_nk0au"]
 [ext_resource type="Texture2D" uid="uid://pdyngf85yq41" path="res://flash.png" id="5_x1jry"]
 [ext_resource type="FontFile" uid="uid://dfr414ntewvp8" path="res://Retro Gaming.ttf" id="6_rga22"]
 [ext_resource type="Script" path="res://Label.gd" id="8_81ckk"]
@@ -16,32 +17,6 @@ bg_color = Color(0.6, 0.6, 0.6, 0.643137)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wnusq"]
 bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_emjce"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/sync = true
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/sync = true
-properties/2/path = NodePath("Camera3D:rotation")
-properties/2/spawn = true
-properties/2/sync = true
-properties/3/path = NodePath("Camera3D/Eyasluna/AnimationPlayer:current_animation")
-properties/3/spawn = true
-properties/3/sync = true
-properties/4/path = NodePath("UsernameHover/SubViewport/Label:text")
-properties/4/spawn = true
-properties/4/sync = true
-properties/5/path = NodePath("Camera3D/RayCast3D:collide_with_areas")
-properties/5/spawn = true
-properties/5/sync = true
-properties/6/path = NodePath(".:username")
-properties/6/spawn = true
-properties/6/sync = true
-properties/7/path = NodePath("UsernameHover:texture")
-properties/7/spawn = true
-properties/7/sync = true
 
 [sub_resource type="Gradient" id="Gradient_bmwc4"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -84,6 +59,17 @@ orientation = 2
 [sub_resource type="ViewportTexture" id="ViewportTexture_ru46m"]
 viewport_path = NodePath("UsernameHover/SubViewport")
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_emjce"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath("Head:rotation")
+properties/2/spawn = true
+properties/2/sync = true
+
 [node name="player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01727, 0)
 collision_layer = 0
@@ -91,6 +77,7 @@ script = ExtResource("1_uxq1m")
 speed = 10.0
 jump = 10.0
 sensitivity = 2.0
+inventory = ExtResource("2_hyhxc")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.28585, 0, 0, 0, 1.28585, 0, 0, 0, 1.28585, 0, -0.987032, 0)
@@ -100,24 +87,24 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_x4oer")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.033112, 0.830705, -0.174368)
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.844048, -0.126293)
 
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+[node name="Camera3D" type="Camera3D" parent="Head"]
+
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D"]
 target_position = Vector3(0, 0, -100)
-collision_mask = 2
+collision_mask = 6
 collide_with_areas = true
-collide_with_bodies = false
 
-[node name="Decal" type="Decal" parent="Camera3D"]
+[node name="Decal" type="Decal" parent="Head/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0143285, -1.7679)
 visible = false
 texture_albedo = ExtResource("3_26x8t")
 texture_normal = ExtResource("3_26x8t")
 
-[node name="Eyasluna" parent="Camera3D" instance=ExtResource("2_pt21w")]
-transform = Transform3D(0.899088, 0, 0, 0, 0.899088, 0, 0, 0, 0.899088, 0.412651, -0.293585, -0.424003)
-mag_size = 8
+[node name="Weapon" parent="Head/Camera3D" instance=ExtResource("2_pt21w")]
+transform = Transform3D(1.278, 0, 0, 0, 1.278, 0, 0, 0, 1.278, 0.351405, -0.194719, -0.371065)
 
 [node name="HUD" type="Node" parent="."]
 
@@ -139,20 +126,23 @@ show_percentage = false
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="HUD/CanvasLayer"]
-texture_filter = 3
+texture_filter = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.098, 1.098)
+size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("5_8gn4m")
+texture = ExtResource("5_nk0au")
+stretch_mode = 2
 
 [node name="AmmoCount" type="Label" parent="HUD/CanvasLayer"]
 visible = false
@@ -165,9 +155,6 @@ theme_override_fonts/font = ExtResource("6_rga22")
 theme_override_font_sizes/font_size = 22
 text = "0
 "
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_emjce")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.44193)
@@ -208,4 +195,10 @@ text = "user"
 horizontal_alignment = 1
 script = ExtResource("8_81ckk")
 
-[connection signal="shoot" from="Camera3D/Eyasluna" to="." method="_on_eyasluna_shoot"]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_emjce")
+
+[connection signal="aiming" from="Head/Camera3D/Weapon" to="." method="_on_weapon_aiming"]
+[connection signal="shoot" from="Head/Camera3D/Weapon" to="." method="_on_eyasluna_shoot"]
+
+[editable path="Head/Camera3D/Weapon"]

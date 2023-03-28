@@ -3,15 +3,20 @@ extends CharacterBody3D
 @onready var username_text = get_node("UsernameHover/SubViewport/Label")
 @onready var name_hover = $UsernameHover
 @onready var subviewport = $UsernameHover/SubViewport
-@onready var camera = $Camera3D
-@onready var ray = $Camera3D/RayCast3D
-@onready var weapon = $Camera3D/Eyasluna
+@onready var camera = $Head/Camera3D
+@onready var ray = $Head/Camera3D/RayCast3D
 @onready var ammo_count = $HUD/CanvasLayer/AmmoCount
+@onready var weapon = $Head/Camera3D/Weapon
+@onready var head = $Head
 
 @export var speed: float
 @export var jump: float
 @export var sensitivity: float
+@export var inventory: Resource
 
+var currently_equiped = 0
+
+var aim_sens = sensitivity * 0.2
 var username: set = _set_username, get = _get_username
 
 
@@ -34,14 +39,12 @@ func _get_username():
 func _ready():
 	if not is_multiplayer_authority(): return
 	
+	weapon.update.rpc()
+	
+	for item in inventory.equipable:
+		item.ammo = item.mag_size
+	
 	get_node("HUD/CanvasLayer/AmmoCount").visible = true
-	
-	#print($Sprite3D/SubViewport/Label2.text)
-	
-	#print(self)
-	#print(name_hover)
-	#print(subviewport)
-	#print(username_text)
 	
 	name_hover.texture = subviewport.get_texture()
 	
@@ -54,15 +57,41 @@ func _unhandled_input(event):
 	
 	if event is InputEventMouseMotion:
 		rotate_y(-event.relative.x * (sensitivity * 0.001))
-		camera.rotate_x(-event.relative.y * (sensitivity * 0.001))
-		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
+		head.rotate_x(-event.relative.y * (sensitivity * 0.001))
+		head.rotation.x = clamp(head.rotation.x, -PI/2, PI/2)
+		
+	if Input.is_action_just_pressed("scroll_up"):
+		if currently_equiped != 0:
+			currently_equiped -= 1
+		else:
+			currently_equiped = len(inventory.equipable)-1
+			
+		weapon.animator.stop()
+			
+	if Input.is_action_just_pressed("scroll_down"):
+		if currently_equiped != len(inventory.equipable)-1:
+			currently_equiped += 1
+		else:
+			currently_equiped = 0
+
+		weapon.animator.stop()
 
 
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return
 	# Add the gravity.
+	#print(inventory.equipable[0])
+	if ray.is_colliding():
+		weapon.ray.look_at(ray.get_collision_point())
+	else:
+		pass
 	
-	get_node("HUD/CanvasLayer/AmmoCount").text = str(weapon.ammo)
+	weapon.resource = inventory.equipable[currently_equiped]
+	weapon.update.rpc()
+	
+	camera.fov = lerp_angle(camera.fov, 75, 1)
+	
+	get_node("HUD/CanvasLayer/AmmoCount").text = str(weapon.resource.ammo)
 	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -87,17 +116,8 @@ func _physics_process(delta):
 
 @rpc("call_local")
 func _on_eyasluna_shoot():
-	if not is_multiplayer_authority(): return
-	
-	if ray.is_colliding():
-		var hit_area = ray.get_collider()
-		print(hit_area)
-		var hit_obj = hit_area.get_parent()
-		#hit_obj.rpc_id(hit_area.get_multiplayer_authority(), "damage", 5)
-		hit_area.shot.emit(5, self)
-		var hit_point = ray.get_collision_point()
-		#print(hit_point)
-		
-	else:
-		pass
+	camera.fov = 76
 
+
+func _on_weapon_aiming(value):
+	pass

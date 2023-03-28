@@ -9,11 +9,11 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3rwnr"]
 albedo_color = Color(0.458824, 0.439216, 0.623529, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_q5c1q"]
-size = Vector3(0.601096, 1.18855, 0.274172)
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_xh57n"]
 radius = 0.182064
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q5c1q"]
+size = Vector3(0.601096, 1.18855, 0.274172)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bju3g"]
 radius = 0.240504
@@ -41,8 +41,8 @@ properties/2/path = NodePath(".:rotation")
 properties/2/spawn = true
 properties/2/sync = true
 properties/3/path = NodePath("HUD/Sprite3D:texture")
-properties/3/spawn = true
-properties/3/sync = true
+properties/3/spawn = false
+properties/3/sync = false
 
 [node name="test_enemy" type="CharacterBody3D" groups=["enemies"]]
 axis_lock_angular_x = true
@@ -55,15 +55,6 @@ view_distance = 20
 mesh = ExtResource("1_gifd2")
 surface_material_override/0 = SubResource("StandardMaterial3D_3rwnr")
 
-[node name="Body_Hitbox" type="Area3D" parent="."]
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("3_hhxru")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Body_Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0189568, 0.624453, -0.00920701)
-shape = SubResource("BoxShape3D_q5c1q")
-
 [node name="Critical_Hitbox" type="Area3D" parent="."]
 collision_layer = 2
 collision_mask = 0
@@ -73,6 +64,15 @@ script = ExtResource("3_vba6l")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42476, 0)
 shape = SubResource("SphereShape3D_xh57n")
 
+[node name="Body_Hitbox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("3_hhxru")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body_Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0189568, 0.624453, -0.00920701)
+shape = SubResource("BoxShape3D_q5c1q")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.775312, 0)
 shape = SubResource("CapsuleShape3D_bju3g")
@@ -81,6 +81,10 @@ shape = SubResource("CapsuleShape3D_bju3g")
 
 [node name="Sprite3D" parent="HUD" index="0"]
 texture = SubResource("ViewportTexture_4em3u")
+
+[node name="SubViewport" parent="HUD/Sprite3D" index="0"]
+own_world_3d = false
+size_2d_override_stretch = true
 
 [node name="Sight" type="Area3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)

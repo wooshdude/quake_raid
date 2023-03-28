@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bq1mysancn0cc"
+path="res://.godot/imported/agent_of_wood.obj-94aa9601892c6ea21c9e05d76e5d7765.mesh"
+
+[deps]
+
+files=["res://.godot/imported/agent_of_wood.obj-94aa9601892c6ea21c9e05d76e5d7765.mesh"]
+
+source_file="res://weapons/agent_of_wood/agent_of_wood.obj"
+dest_files=["res://.godot/imported/agent_of_wood.obj-94aa9601892c6ea21c9e05d76e5d7765.mesh", "res://.godot/imported/agent_of_wood.obj-94aa9601892c6ea21c9e05d76e5d7765.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Inventory" load_steps=6 format=3 uid="uid://doc5edwb7g1q0"]
+
+[ext_resource type="Resource" uid="uid://5xapb25edv7x" path="res://weapons/eyasluna.tres" id="1_pmt3r"]
+[ext_resource type="Script" path="res://weapons/inventory.gd" id="1_xl7ih"]
+[ext_resource type="Resource" uid="uid://dibmq5euxg70y" path="res://weapons/agent_of_wood.tres" id="2_dwjdk"]
+[ext_resource type="Resource" uid="uid://hluvo3g7ia85" path="res://weapons/prophetic_rays.tres" id="3_m0oes"]
+[ext_resource type="Resource" uid="uid://c5nir82omu4s7" path="res://weapons/shredded_vapor.tres" id="4_ebk64"]
+
+[resource]
+script = ExtResource("1_xl7ih")
+equipable = Array[Resource]([ExtResource("1_pmt3r"), ExtResource("2_dwjdk"), ExtResource("3_m0oes"), ExtResource("4_ebk64")])

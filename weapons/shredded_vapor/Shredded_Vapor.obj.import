@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bjwuk38fyycnl"
+path="res://.godot/imported/Shredded_Vapor.obj-11b87ee1563d9e3eaf340e89aaa1e7e5.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Shredded_Vapor.obj-11b87ee1563d9e3eaf340e89aaa1e7e5.mesh"]
+
+source_file="res://weapons/shredded_vapor/Shredded_Vapor.obj"
+dest_files=["res://.godot/imported/Shredded_Vapor.obj-11b87ee1563d9e3eaf340e89aaa1e7e5.mesh", "res://.godot/imported/Shredded_Vapor.obj-11b87ee1563d9e3eaf340e89aaa1e7e5.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

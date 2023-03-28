@@ -1,0 +1,95 @@
+[gd_scene load_steps=13 format=3 uid="uid://cn1qpeoijygo1"]
+
+[ext_resource type="Script" path="res://Rocket.gd" id="1_uc0kv"]
+[ext_resource type="Texture2D" uid="uid://biak717sftrk1" path="res://textures/explosion.png" id="2_v2w3p"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_ru2ix"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mer7p"]
+radius = 0.175467
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tnkbb"]
+transparency = 1
+albedo_texture = ExtResource("2_v2w3p")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_ffixq"]
+offsets = PackedFloat32Array(0.603448, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_esyam"]
+gradient = SubResource("Gradient_ffixq")
+
+[sub_resource type="Curve" id="Curve_kqugh"]
+max_value = 100.0
+_data = [Vector2(0.204878, 2.21673), 0.0, 0.0, 0, 0, Vector2(0.887805, 16.3636), 20.0484, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_k8y8x"]
+curve = SubResource("Curve_kqugh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gal4a"]
+emission_shape = 1
+emission_sphere_radius = 0.4
+direction = Vector3(0, 1, 0)
+spread = 16.59
+initial_velocity_min = 3.9
+initial_velocity_max = 3.9
+angular_velocity_min = -101.06
+angular_velocity_max = 37.89
+damping_max = 1.0
+damping_curve = SubResource("CurveTexture_k8y8x")
+color_ramp = SubResource("GradientTexture1D_esyam")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_w635c"]
+size = Vector2(0.5, 0.5)
+orientation = 2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_532cc"]
+radius = 4.92659
+
+[node name="Rocket" type="RigidBody3D"]
+top_level = true
+collision_layer = 0
+collision_mask = 6
+gravity_scale = 0.0
+script = ExtResource("1_uc0kv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.304843, 0, 0, 0, 0.304843, 0, 0, 0, 0.304843, 0, 0, 0)
+mesh = SubResource("SphereMesh_ru2ix")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_mer7p")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_tnkbb")
+emitting = false
+one_shot = true
+explosiveness = 0.89
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_gal4a")
+draw_pass_1 = SubResource("PlaneMesh_w635c")
+
+[node name="BlastRadius" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+
+[node name="BlastShape" type="CollisionShape3D" parent="BlastRadius"]
+shape = SubResource("SphereShape3D_532cc")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="area_entered" from="BlastRadius" to="." method="_on_blast_radius_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

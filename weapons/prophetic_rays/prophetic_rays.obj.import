@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cc3gn7c8btj1i"
+path="res://.godot/imported/prophetic_rays.obj-de28ef1bfafb9361165ce9d4ccf44862.mesh"
+
+[deps]
+
+files=["res://.godot/imported/prophetic_rays.obj-de28ef1bfafb9361165ce9d4ccf44862.mesh"]
+
+source_file="res://weapons/prophetic_rays/prophetic_rays.obj"
+dest_files=["res://.godot/imported/prophetic_rays.obj-de28ef1bfafb9361165ce9d4ccf44862.mesh", "res://.godot/imported/prophetic_rays.obj-de28ef1bfafb9361165ce9d4ccf44862.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

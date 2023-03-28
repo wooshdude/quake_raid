@@ -12,7 +12,7 @@ extends CharacterBody3D
 @onready var crit_box = $Critical_Hitbox
 @onready var body_box = $Body_Hitbox
 
-@export var health = 100: set = _set_health
+@export var health = 15: set = _set_health
 @export var speed = 3
 @export var view_distance = 10
 
@@ -34,14 +34,17 @@ func damage(value):
 		queue_free()
 
 
+@rpc("any_peer")
 func _set_health(value):
-	if not is_multiplayer_authority(): return
+	#if not is_multiplayer_authority(): return
 	health = value
 	health_bar.value = health
 
 
 func _ready():
 	if not is_multiplayer_authority(): return
+	
+	health_bar.max_value = health
 	
 	HUDsprite.texture = subviewport.get_texture()
 	
@@ -67,31 +70,33 @@ func _physics_process(delta):
 	move_and_slide()
 
 
-#@rpc("any_peer")
+@rpc("any_peer", "call_local")
 func _on_critical_hitbox_shot(value, object):
 	#if not is_multiplayer_authority(): return
 	
-	print("hit for %s damage" % damage)
-	damage.rpc(value)
+	print("hit for %s damage" % value)
+	damage(value * 2)
+	damage.rpc(value * 2)
 	
-	print(object._get_username())
-	look_at(object.global_position)
+	#print(object._get_username())
+	look_at(object.get_parent().global_position)
 
 
-#@rpc("any_peer")
+@rpc("any_peer", "call_remote")
 func _on_body_hitbox_shot(value, object):
 	#if not is_multiplayer_authority(): return
 	
-	print("hit for %s damage" % damage)
+	print("hit for %s damage" % value)
+	damage(value)
 	damage.rpc(value)
 
-	look_at(object.global_position)
+	look_at(object.get_parent().global_position)
 
 
 func _on_sight_area_entered(area):
 	#if not is_multiplayer_authority(): return
 	
-	print(area)
+	#print(area)
 	if area not in looking_at:
 		looking_at.append(area)
 

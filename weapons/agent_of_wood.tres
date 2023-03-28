@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="WeaponStats" load_steps=4 format=3 uid="uid://dibmq5euxg70y"]
+
+[ext_resource type="ArrayMesh" uid="uid://bq1mysancn0cc" path="res://weapons/agent_of_wood/agent_of_wood.obj" id="1_casnu"]
+[ext_resource type="Script" path="res://weapons/weapon_stats.gd" id="1_k4dou"]
+[ext_resource type="Script" path="res://weapons/hit_scan.gd" id="1_xiriy"]
+
+[resource]
+script = ExtResource("1_k4dou")
+damage = 2
+mag_size = 30
+rpm = 600.0
+full_auto = true
+recoil = 10
+reload = 1.8
+model = ExtResource("1_casnu")
+muzzle_pos = Vector3(0, 0.128263, -0.41013)
+custom_trait = ExtResource("1_xiriy")

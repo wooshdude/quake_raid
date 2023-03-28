@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://bap5ykghpf1qe"
+path="res://.godot/imported/boss_room_test.map-9b8e76f0aef982e5756674a42d40232e.tres"
+
+[deps]
+
+source_file="res://Trenchbroom/boss_room_test.map"
+dest_files=["res://.godot/imported/boss_room_test.map-9b8e76f0aef982e5756674a42d40232e.tres"]
+
+[params]
+

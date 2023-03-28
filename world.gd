@@ -70,7 +70,7 @@ func add_player(peer_id):
 # Get a random position within a radius around a 3D object
 func get_random_position_around_object(object_pos: Vector3, radius: float) -> Vector3:
 	# Generate a random point within a cube
-	var random_point = Vector3(randf(), randf(), randf())
+	var random_point = Vector3(randf(), 0, randf())
 
 	# Normalize the point to ensure it's within the radius
 	random_point = random_point.normalized() * radius
@@ -83,8 +83,8 @@ func get_random_position_around_object(object_pos: Vector3, radius: float) -> Ve
 
 func _on_timer_timeout():
 	print("spawned new enemy")
-	var enemy = test_enemy.instantiate()
-	enemy.name = str(multiplayer.get_unique_id())
+	var enemy = test_enemy.instantiate(PackedScene.GEN_EDIT_STATE_MAIN)
+	#enemy.name = str(multiplayer.get_unique_id())
 	$Spawner.add_child(enemy)
 	enemy.global_position = get_random_position_around_object($Spawner.global_position, 4)
 	enemy.rotate_y(randi_range(0,360))
