@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://d2dhh56s0520t"]
+[gd_scene load_steps=17 format=3 uid="uid://d2dhh56s0520t"]
 
 [ext_resource type="ArrayMesh" uid="uid://m2ce8r0qwrdl" path="res://guardian_base.obj" id="1_gifd2"]
 [ext_resource type="Script" path="res://test_enemy.gd" id="1_vkhyl"]
 [ext_resource type="Script" path="res://Body_Hitbox.gd" id="3_hhxru"]
 [ext_resource type="Script" path="res://Critical_Hitbox.gd" id="3_vba6l"]
 [ext_resource type="FontFile" uid="uid://dfr414ntewvp8" path="res://Retro Gaming.ttf" id="5_csh5g"]
+[ext_resource type="Script" path="res://SyncNode.gd" id="6_btlnm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3rwnr"]
 albedo_color = Color(0.458824, 0.439216, 0.623529, 1)
@@ -27,20 +28,6 @@ radius = 3.59233
 height = 12.383
 radius = 8.51759
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_d5s67"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/sync = true
-properties/1/path = NodePath(".:health")
-properties/1/spawn = true
-properties/1/sync = true
-properties/2/path = NodePath(".:rotation")
-properties/2/spawn = true
-properties/2/sync = true
-properties/3/path = NodePath("HUD/Sprite3D:texture")
-properties/3/spawn = false
-properties/3/sync = false
-
 [sub_resource type="ViewportTexture" id="ViewportTexture_t5q4f"]
 viewport_path = NodePath("HUD/Sprite3D/SubViewportContainer/SubViewport")
 
@@ -49,6 +36,26 @@ bg_color = Color(0.0823529, 0.0823529, 0.0823529, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c7mwc"]
 bg_color = Color(0.921569, 0.282353, 0.227451, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_d5s67"]
+properties/0/path = NodePath(".:health")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:pos")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath(".:rot")
+properties/2/spawn = true
+properties/2/sync = true
+properties/3/path = NodePath("..:health")
+properties/3/spawn = true
+properties/3/sync = true
+properties/4/path = NodePath("..:position")
+properties/4/spawn = true
+properties/4/sync = true
+properties/5/path = NodePath("..:rotation")
+properties/5/spawn = true
+properties/5/sync = true
 
 [node name="test_enemy" type="CharacterBody3D" groups=["enemies"]]
 axis_lock_angular_x = true
@@ -97,9 +104,6 @@ shape = SubResource("CylinderShape3D_jv2m4")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_d5s67")
-
 [node name="HUD" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75361, 0)
 
@@ -141,4 +145,15 @@ show_percentage = false
 
 [node name="Node2D" type="Node2D" parent="HUD/Sprite3D/SubViewport"]
 
+[node name="SyncNode" type="Node3D" parent="."]
+script = ExtResource("6_btlnm")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("../SyncNode")
+replication_config = SubResource("SceneReplicationConfig_d5s67")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

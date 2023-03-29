@@ -1133,3 +1133,7 @@ func _build_complete():
 	print('Build complete\n')
 	
 	emit_signal("build_complete")
+
+
+func _on_multiplayer_spawner_spawned(node):
+	print("spawned ", node)

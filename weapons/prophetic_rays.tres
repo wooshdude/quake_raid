@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="WeaponStats" load_steps=5 format=3 uid="uid://hluvo3g7ia85"]
 
-[ext_resource type="Script" path="res://weapons/hit_scan.gd" id="1_7pagq"]
 [ext_resource type="Script" path="res://weapons/weapon_stats.gd" id="1_dts6f"]
 [ext_resource type="ArrayMesh" uid="uid://cc3gn7c8btj1i" path="res://weapons/prophetic_rays/prophetic_rays.obj" id="1_ent36"]
+[ext_resource type="Script" path="res://weapons/spawn_gun.gd" id="1_why1n"]
 [ext_resource type="AudioStream" uid="uid://6w2gxriqohgb" path="res://weapons/Shot1Energy2.0.ogg" id="4_e65va"]
 
 [resource]
@@ -16,4 +16,4 @@ reload = 1.5
 model = ExtResource("1_ent36")
 muzzle_pos = Vector3(0, 0.0802598, -0.41013)
 sound = ExtResource("4_e65va")
-custom_trait = ExtResource("1_7pagq")
+custom_trait = ExtResource("1_why1n")

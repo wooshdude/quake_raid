@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deg2ggoiqj5ut"
-path.s3tc="res://.godot/imported/small_grass.png-71601b061f8b598911820331d4b5c754.s3tc.ctex"
+uid="uid://m23uiu0nx2bg"
+path.s3tc="res://.godot/imported/space.png-3ed6f820789c5d82756d39277de494a9.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/forest stuff/small_grass.png"
-dest_files=["res://.godot/imported/small_grass.png-71601b061f8b598911820331d4b5c754.s3tc.ctex"]
+source_file="res://textures/stones/asteroid/space.png"
+dest_files=["res://.godot/imported/space.png-3ed6f820789c5d82756d39277de494a9.s3tc.ctex"]
 
 [params]
 

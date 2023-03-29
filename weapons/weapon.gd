@@ -43,15 +43,6 @@ func _process(delta):
 	model.rotation.x = lerp_angle(model.rotation.x, 0, 0.03)
 	model.rotation.y = lerp_angle(model.rotation.y, 0, 0.1)
 	
-	
-	if Input.is_action_pressed("aim"):
-		print("hello world")
-		model.position = lerp(model.position, Vector3(-0.36, 0.047, 0.115), 0.1)
-		aiming.emit(true)
-	else:	
-		model.position = lerp(model.position, Vector3(0,0,0), 0.05)
-		aiming.emit(false)
-	
 	if can_shoot == true and animator.is_playing() == false:
 		if resource.full_auto == true:
 			if Input.is_action_pressed("shoot"):
@@ -67,7 +58,7 @@ func _process(delta):
 
 @rpc("call_local")
 func update():
-	if not is_multiplayer_authority(): return
+	#if not is_multiplayer_authority(): return
 	
 	meshinstance.mesh = resource.model
 	muzzle.position = resource.muzzle_pos

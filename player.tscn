@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://player.gd" id="1_uxq1m"]
 [ext_resource type="Resource" uid="uid://doc5edwb7g1q0" path="res://weapons/player_inventory.tres" id="2_hyhxc"]
 [ext_resource type="ArrayMesh" uid="uid://m2ce8r0qwrdl" path="res://guardian_base.obj" id="2_ic66e"]
-[ext_resource type="PackedScene" uid="uid://di3fv8g2jjenb" path="res://weapons/eyasluna/weapon.tscn" id="2_pt21w"]
+[ext_resource type="PackedScene" uid="uid://jp1rr3bfa1bb" path="res://weapons/eyasluna/weapon.tscn" id="2_pt21w"]
 [ext_resource type="Texture2D" uid="uid://cuf5w88u5l8d3" path="res://bullet_hole.png" id="3_26x8t"]
 [ext_resource type="Texture2D" uid="uid://cve0nf46jywy5" path="res://weapons/KovaaK-Crosshair(2).png" id="5_nk0au"]
 [ext_resource type="Texture2D" uid="uid://pdyngf85yq41" path="res://flash.png" id="5_x1jry"]
@@ -72,10 +72,24 @@ properties/2/sync = true
 properties/3/path = NodePath("Head/Camera3D/Weapon/Model/MeshInstance3D:mesh")
 properties/3/spawn = true
 properties/3/sync = true
+properties/4/path = NodePath("Head/Camera3D/Weapon/Model/Muzzle/Sprite3D:visible")
+properties/4/spawn = true
+properties/4/sync = true
+properties/5/path = NodePath("Head/Camera3D/Weapon:resource")
+properties/5/spawn = true
+properties/5/sync = true
+properties/6/path = NodePath("Head/Camera3D/Weapon/Model:rotation")
+properties/6/spawn = true
+properties/6/sync = true
+properties/7/path = NodePath(".:inventory")
+properties/7/spawn = true
+properties/7/sync = true
+properties/8/path = NodePath("UsernameHover/SubViewport/Label:text")
+properties/8/spawn = true
+properties/8/sync = true
 
 [node name="player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01727, 0)
-collision_layer = 0
 script = ExtResource("1_uxq1m")
 speed = 8.0
 jump = 10.0

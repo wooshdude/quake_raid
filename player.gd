@@ -17,7 +17,7 @@ extends CharacterBody3D
 var currently_equiped = 0
 
 var aim_sens = sensitivity * 0.2
-var username: set = _set_username, get = _get_username
+var username: String
 
 enum {
 	WALK,
@@ -31,21 +31,18 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * 2
 
 
 func _enter_tree():
+	print("new player")
 	set_multiplayer_authority(str(name).to_int())
-
-
-func _set_username(name):
-	get_node("UsernameHover/SubViewport/Label").text = str(name)
-
-
-func _get_username():
-	return username
 
 
 func _ready():
 	if not is_multiplayer_authority(): return
 	
-	weapon.update.rpc()
+	get_node("UsernameHover/SubViewport/Label").text = str(username)
+	update.rpc()
+	
+	weapon.update()
+	weapon.update.rpc_id(multiplayer.get_unique_id())
 	
 	for item in inventory.equipable:
 		item.ammo = item.mag_size
@@ -93,6 +90,9 @@ func _unhandled_input(event):
 	
 	if not Input.is_action_pressed("up"):
 		STATE = WALK
+		
+	if Input.is_action_just_pressed("aim"):
+		global_position = Vector3(0,0,0)
 
 
 func _physics_process(delta):
@@ -105,6 +105,7 @@ func _physics_process(delta):
 		pass
 	
 	weapon.resource = inventory.equipable[currently_equiped]
+	weapon.update()
 	weapon.update.rpc()
 	
 	camera.fov = lerp_angle(camera.fov, 75, 1)
@@ -157,6 +158,11 @@ func movement(delta, new_speed):
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
+
+
+@rpc("any_peer")
+func update():
+	get_node("UsernameHover/SubViewport/Label").text = str(username)
 
 
 @rpc("call_local")

@@ -1,6 +1,5 @@
 extends GDScript
 
-
 func shoot(weapon):
 	if weapon.ray.is_colliding():
 		var hit_area = weapon.ray.get_collider()
@@ -12,5 +11,7 @@ func shoot(weapon):
 		var hit_point = weapon.ray.get_collision_point()
 		print(hit_point)
 	else:
-		weapon.ray.rotation = Vector3.ZERO
+		weapon.ray.rotation = Vector3(0,0,0)
 	
+	var new_enemy = load("res://test_enemy.tscn").instantiate()
+	weapon.get_parent().get_parent().get_parent().get_parent().add_child(new_enemy)

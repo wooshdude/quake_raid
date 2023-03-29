@@ -16,33 +16,38 @@ extends CharacterBody3D
 @export var speed = 3
 @export var view_distance = 10
 
+var enet_peer = ENetMultiplayerPeer.new()
+
 var looking_at = []
 
 func update_target_location(target_location):
 	navagent.set_target_position(target_location)
 
 
-@rpc("any_peer")
+@rpc("any_peer", "reliable")
 func damage(value):
 	#if not is_multiplayer_authority(): return
 	
 	print('hit')
 	var new_health = health - value
 	_set_health(new_health)
+	_set_health.rpc(new_health)
+	print(health)
 	
-	if health < 0:
+	if health <= 0:
 		queue_free()
 
 
-@rpc("any_peer")
+@rpc("any_peer", "reliable")
 func _set_health(value):
 	#if not is_multiplayer_authority(): return
 	health = value
-	health_bar.value = health
+	get_node("HUD/Sprite3D/SubViewport/ProgressBar").value = health
 
 
 func _ready():
-	if not is_multiplayer_authority(): return
+	#if not is_multiplayer_authority(): return
+	multiplayer.multiplayer_peer = enet_peer
 	
 	health_bar.max_value = health
 	
@@ -55,12 +60,26 @@ func _ready():
 
 
 func _physics_process(delta):
-	if not is_multiplayer_authority(): return
+	#if not is_multiplayer_authority(): return
+	
+	$SyncNode.health = health
+	$SyncNode.pos = global_position
+	$SyncNode.rot = rotation
 	
 	if !looking_at.is_empty():
 		navagent.target_position = looking_at[0].global_position
 		look_at(looking_at[0].global_position)
 	
+	move.rpc(delta)
+
+@rpc("any_peer")
+func move(delta):
+	#if not is_multiplayer_authority(): return
+	
+	if !looking_at.is_empty():
+		navagent.target_position = looking_at[0].global_position
+		look_at(looking_at[0].global_position)
+		
 	var current_location = global_transform.origin
 	var next_location = navagent.get_next_path_position()
 	
@@ -70,29 +89,34 @@ func _physics_process(delta):
 	move_and_slide()
 
 
+@rpc("any_peer")
+func look(object):
+	if object.get_parent() not in looking_at:
+		looking_at.append(object.get_parent())
+
 @rpc("any_peer", "call_local")
 func _on_critical_hitbox_shot(value, object):
 	#if not is_multiplayer_authority(): return
 	
-	print("hit for %s damage" % value)
+	print('hit by ', object.get_parent().get_parent())
+	#print("hit for %s damage" % value)
 	damage(value * 2)
 	damage.rpc(value * 2)
 	
 	#print(object._get_username())
-	if object.get_parent() not in looking_at:
-		looking_at.append(object.get_parent())
+	look.rpc_id(object.get_parent().get_parent().get_parent().multiplayer.get_unique_id(), object)
 
 
 @rpc("any_peer", "call_remote")
 func _on_body_hitbox_shot(value, object):
 	#if not is_multiplayer_authority(): return
 	
-	print("hit for %s damage" % value)
+	print('hit by ', object.get_parent())
+	#print("hit for %s damage" % value)
 	damage(value)
 	damage.rpc(value)
 
-	if object.get_parent() not in looking_at:
-		looking_at.append(object.get_parent())
+	look.rpc_id(object.get_parent().get_parent().get_parent().multiplayer.get_unique_id(), object)
 
 
 func _on_sight_area_entered(area):
@@ -111,3 +135,24 @@ func _on_sight_area_exited(area):
 	#if not is_multiplayer_authority(): return
 	
 	looking_at.erase(area)
+
+
+func get_random_radius(object_pos: Vector3, radius: float) -> Vector3:
+	# Generate a random point within a cube
+	var random_point = Vector3(randf(), 0, randf())
+
+	# Normalize the point to ensure it's within the radius
+	random_point = random_point.normalized() * radius
+
+	# Translate the point to the object's position
+	random_point += object_pos
+
+	return random_point
+
+func _on_timer_timeout():
+	var rand = randi_range(1, 5)
+	if rand == 1:
+		navagent.target_position = get_random_radius(self.position, 5)
+	elif rand == 2:
+		look_at(get_random_radius(self.position, 5))
+	

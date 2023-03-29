@@ -1,6 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://di3fv8g2jjenb"]
+[gd_scene load_steps=13 format=3 uid="uid://jp1rr3bfa1bb"]
 
-[ext_resource type="Script" path="res://weapons/hand_cannon.gd" id="1_2c3ls"]
+[ext_resource type="Script" path="res://weapons/weapon.gd" id="1_322gt"]
 [ext_resource type="Resource" uid="uid://5xapb25edv7x" path="res://weapons/eyasluna.tres" id="2_ewdpl"]
 [ext_resource type="Texture2D" uid="uid://pdyngf85yq41" path="res://flash.png" id="3_m3klv"]
 [ext_resource type="ArrayMesh" uid="uid://ce0xca5tq3ylu" path="res://weapons/finest_managment/finest_managment.obj" id="3_mmwea"]
@@ -138,31 +138,8 @@ _data = {
 "swirl_reload": SubResource("Animation_xfrna")
 }
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wrri5"]
-properties/0/path = NodePath("Model/MeshInstance3D:mesh")
-properties/0/spawn = false
-properties/0/sync = false
-properties/1/path = NodePath("Model:rotation")
-properties/1/spawn = true
-properties/1/sync = true
-properties/2/path = NodePath("Model/Muzzle/Sprite3D:visible")
-properties/2/spawn = true
-properties/2/sync = true
-properties/3/path = NodePath(".:resource")
-properties/3/spawn = true
-properties/3/sync = true
-properties/4/path = NodePath("Model/Muzzle:position")
-properties/4/spawn = true
-properties/4/sync = true
-properties/5/path = NodePath("AnimationPlayer:current_animation")
-properties/5/spawn = true
-properties/5/sync = true
-properties/6/path = NodePath("Model/MeshInstance3D:skeleton")
-properties/6/spawn = true
-properties/6/sync = true
-
 [node name="Weapon" type="Node3D"]
-script = ExtResource("1_2c3ls")
+script = ExtResource("1_322gt")
 resource = ExtResource("2_ewdpl")
 
 [node name="Model" type="Node3D" parent="."]
@@ -180,6 +157,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.117889, -0.505426)
 [node name="Sprite3D" type="Sprite3D" parent="Model/Muzzle"]
 transform = Transform3D(0.103, 0, 0, 0, 0.103, 0, 0, 0, 0.103, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_jw2rh")
+transparency = 0.5
 pixel_size = 0.0015
 billboard = 1
 texture = ExtResource("3_m3klv")
@@ -190,7 +168,6 @@ texture = ExtResource("3_m3klv")
 target_position = Vector3(0, -1, -100)
 collision_mask = 6
 collide_with_areas = true
-collide_with_bodies = false
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer" parent="Model/Muzzle"]
 stream = ExtResource("5_d4epr")
@@ -212,9 +189,6 @@ libraries = {
 [node name="SPR" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_wrri5")
 
 [connection signal="timeout" from="Model/Muzzle/Timer" to="." method="_on_timer_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
