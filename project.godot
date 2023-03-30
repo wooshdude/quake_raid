@@ -96,3 +96,7 @@ aim={
 3d_physics/layer_2="enemy"
 3d_physics/layer_3="ground"
 3d_physics/layer_4="plate"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

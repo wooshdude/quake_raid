@@ -21,9 +21,9 @@ func _on_timer_timeout():
 	add_enemy.rpc(multiplayer.get_instance_id())
 
 
-@rpc("reliable", "any_peer")
+@rpc("any_peer", "call_local", "unreliable_ordered")
 func add_enemy(peer_id):
-	if not is_multiplayer_authority(): return
+	#if not is_multiplayer_authority(): return
 	
 	var new_enemy = enemy.instantiate()
 	new_enemy.name = str(peer_id)

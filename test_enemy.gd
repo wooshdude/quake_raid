@@ -137,6 +137,7 @@ func _on_sight_area_exited(area):
 	looking_at.erase(area)
 
 
+@rpc("any_peer")
 func get_random_radius(object_pos: Vector3, radius: float) -> Vector3:
 	# Generate a random point within a cube
 	var random_point = Vector3(randf(), 0, randf())
@@ -148,6 +149,7 @@ func get_random_radius(object_pos: Vector3, radius: float) -> Vector3:
 	random_point += object_pos
 
 	return random_point
+
 
 func _on_timer_timeout():
 	var rand = randi_range(1, 5)

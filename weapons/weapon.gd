@@ -58,7 +58,7 @@ func _process(delta):
 
 @rpc("call_local")
 func update():
-	#if not is_multiplayer_authority(): return
+	if not is_multiplayer_authority(): return
 	
 	meshinstance.mesh = resource.model
 	muzzle.position = resource.muzzle_pos

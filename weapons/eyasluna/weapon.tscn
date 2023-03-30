@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://jp1rr3bfa1bb"]
+[gd_scene load_steps=14 format=3 uid="uid://jp1rr3bfa1bb"]
 
 [ext_resource type="Script" path="res://weapons/weapon.gd" id="1_322gt"]
 [ext_resource type="Resource" uid="uid://5xapb25edv7x" path="res://weapons/eyasluna.tres" id="2_ewdpl"]
@@ -138,6 +138,11 @@ _data = {
 "swirl_reload": SubResource("Animation_xfrna")
 }
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_byx2m"]
+properties/0/path = NodePath("Model/MeshInstance3D:mesh")
+properties/0/spawn = true
+properties/0/sync = true
+
 [node name="Weapon" type="Node3D"]
 script = ExtResource("1_322gt")
 resource = ExtResource("2_ewdpl")
@@ -189,6 +194,9 @@ libraries = {
 [node name="SPR" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_byx2m")
 
 [connection signal="timeout" from="Model/Muzzle/Timer" to="." method="_on_timer_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
